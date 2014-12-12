@@ -11,7 +11,10 @@
 
   <section id="main">
     {{outlet}}
-    <input type="checkbox" id="toggle-all">
+    {{input
+      type="checkbox"
+      id="toggle-all"
+      checked=all_are_completed}}
   </section>
 
   <footer id="footer">
@@ -30,9 +33,11 @@
       </li>
     </ul>
 
-    <button id="clear-completed">
-      Clear completed (1)
-    </button>
+    {{#if has_completed}}
+      <button {{action "clearCompleted"}} id="clear-completed">
+        Clear completed ({{completed}})
+      </button>
+    {{/if}}
   </footer>
 </section>
 

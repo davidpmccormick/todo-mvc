@@ -19,8 +19,25 @@ export default Ember.ArrayController.extend({
 
       // Reset the input field
       this.set('new_title', '');
+    },
+    clearCompleted: function() {
+      var completed = this.filterBy('is_completed', true);
+
+      completed.invoke('deleteRecord');
+      completed.invoke('save');
     }
   },
+  all_are_completed: function() {
+    // Ember guides suggest:
+    // return !!this.get('length') && this.isEvery('is_completed');
+    return !!this.get('length') && this.get('remaining') === 0;
+  }.property('remaining'),
+  completed: function() {
+    return this.filterBy('is_completed', true).get('length');
+  }.property('@each.is_completed'),
+  has_completed: function() {
+    return this.get('completed') > 0;
+  }.property('completed'),
   remaining: function() {
     return this.filterBy('is_completed', false).get('length');
   }.property('@each.is_completed'),
