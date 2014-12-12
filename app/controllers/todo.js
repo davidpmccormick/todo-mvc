@@ -16,6 +16,7 @@ export default Ember.ObjectController.extend({
     },
     removeTodo: function() {
       var model = this.get('model');
+
       model.deleteRecord();
       model.save();
     }
