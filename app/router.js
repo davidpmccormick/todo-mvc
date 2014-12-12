@@ -6,7 +6,9 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.resource('todos', { path: '/' });
+  this.resource('todos', { path: '/' }, function() {
+    // Need a nest to get 'index'
+  });
 });
 
 export default Router;
