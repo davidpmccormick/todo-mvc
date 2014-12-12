@@ -27,11 +27,15 @@ export default Ember.ArrayController.extend({
       completed.invoke('save');
     }
   },
-  all_are_completed: function() {
-    // Ember guides suggest:
-    // return !!this.get('length') && this.isEvery('is_completed');
-    return !!this.get('length') && this.get('remaining') === 0;
-  }.property('remaining'),
+  all_are_completed: function(key, value) {
+    if (value === undefined) { // Getter
+      return !!this.get('length') && this.isEvery('is_completed');
+    } else { // Setter
+      this.setEach('is_completed', value);
+      this.invoke('save');
+      return value;
+    }
+  }.property('@each.is_completed'),
   completed: function() {
     return this.filterBy('is_completed', true).get('length');
   }.property('@each.is_completed'),
