@@ -11,19 +11,24 @@
 
   <section id="main">
     <ul id="todo-list">
-      {{#each todo in model itemController="todo"}}
-      <li {{bind-attr class="todo.is_completed:completed todo.is_editing:editing"}}>
-        {{input
-          type="checkbox"
-          checked=todo.is_completed
-          class="toggle"}}
-        {{#if todo.is_editing}}
-          {{input class="edit" value=title focus-out="acceptChanges" insert-newline="acceptChanges" autofocus="autofocus"}}
+    {{#each todo in model itemController="todo"}}
+      {{#with todo}}
+      <li {{bind-attr class="is_completed:completed is_editing:editing"}}>
+        {{#if is_editing}}
+          {{input
+            class="edit"
+            value=title
+            focus-out="acceptChanges"
+            insert-newline="acceptChanges"
+            autofocus="autofocus"}}
         {{else}}
-          <label {{action "editTodo" on="doubleClick"}}>{{todo.title}}</label><button class="destroy"></button>
+          {{input type="checkbox" checked=is_completed class="toggle"}}
+          <label {{action "editTodo" on="doubleClick"}}>{{title}}</label>
+          <button {{action "removeTodo"}} class="destroy"></button>
         {{/if}}
       </li>
-      {{/each}}
+      {{/with}}
+    {{/each}}
     </ul>
 
     <input type="checkbox" id="toggle-all">

@@ -8,12 +8,10 @@ export default Ember.ObjectController.extend({
     acceptChanges: function() {
       this.set('is_editing', false);
 
-      var model = this.get('model');
-
-      if (Ember.isEmpty(model.get('title'))) {
+      if (Ember.isEmpty(this.get('model.title'))) {
         this.send('removeTodo');
       } else {
-        model.save();
+        this.get('model').save();
       }
     },
     removeTodo: function() {
@@ -22,7 +20,7 @@ export default Ember.ObjectController.extend({
       model.save();
     }
   },
-  isEditing: false,
+  is_editing: false,
   is_completed: function(key, value) {
     var model = this.get('model');
 
